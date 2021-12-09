@@ -1,0 +1,33 @@
+{% extends 'betcfbapp/base.html' %}
+
+{% block title %}
+Norm's List of DogPhones
+{% endblock %}
+
+{% block content %}
+    <h1>{{ls.name}}</h1>
+    <form method="post" action="#">
+    {% csrf_token %}
+    {% for widget in ls.widget_set.all %}
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <div class="input-group-text">
+                    {% if widget.complete == True %}
+                        <input type="checkbox", value="clicked", name="c{{widget.id}}" checked>
+                    {% else %}
+                        <input type="checkbox", value="clicked", name="c{{widget.id}}">
+                    {% endif %}
+            </div>
+        </div>
+        <input type="text", value="{{widget.text}}" class="form-control">
+    </div>
+    {% endfor %}
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <button type="submit", name="newItem", value="newItem" class="btn btn-success">Add Item</button>
+        </div>
+        <input type="text", name="new">
+    </div>
+    <button type="submit", name="save", value="save" class="btn btn-success">Save</button>
+    </form>
+{% endblock %}
